@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { FaSearch } from "react-icons/fa";
 import { useSearchParams } from "react-router-dom";
 import SearchResult from "./featuresMenu/SearchResult";
+import { setCache, getCache } from "../cache";
 
 const Search = ({ setMeteoData, loading, setLoading }) => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -34,9 +35,18 @@ const Search = ({ setMeteoData, loading, setLoading }) => {
         setMeteoData(null);
         return;
       }
+      // 1️⃣ Check cache first
+    const cachedData = getCache(city);
+        if (cachedData) {
+        console.log("Using cached data for", city);
+        setMeteoData(cachedData);
+        setLoading(false);
+        return;
+    }
 
-      setLoading(true);
-      try {
+        // 2️⃣ If not cached, fetch from API
+    setLoading(true);
+    try {
         const geoUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(
           city
         )}&count=10&language=en&country=FR`;
@@ -88,7 +98,7 @@ const Search = ({ setMeteoData, loading, setLoading }) => {
         const groupedHourly = groupByDay(forecastData.hourly);
         
         // Send data to parent
-        setMeteoData({
+        const weatherData = {
           location: { name, country, latitude, longitude, timezone },
           current: {
             ...forecastData.current_weather,
@@ -105,7 +115,11 @@ const Search = ({ setMeteoData, loading, setLoading }) => {
             precipitation_sum: forecastData.daily.precipitation_sum.map(v => Math.round(v)),
           },
           hourlyByDay: groupedHourly,
-        });
+        };
+        // 3️⃣ Save to cache
+        setCache(city, weatherData);
+        setMeteoData(weatherData);
+        
         console.log("Weather data fetched:", forecastData);
       } catch (err) {
         console.error("Error fetching data:", err.message);
@@ -123,7 +137,13 @@ const Search = ({ setMeteoData, loading, setLoading }) => {
       setResults([]);
       return;
     }
-    setLoading(true);    
+    setLoading(true);
+    const cachedSuggestions = getCache("suggestions-" + city);
+    if (cachedSuggestions) {
+        setResults(cachedSuggestions);
+        setLoading(false);
+        return;
+    }    
     try {
       const geoUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(
         city
@@ -138,6 +158,7 @@ const Search = ({ setMeteoData, loading, setLoading }) => {
       }
 
       setResults(geoData.results); // only suggestions
+      setCache("suggestions-" + city, geoData.results); // cache suggestions
       // force spinner to stay at least 2 seconds
     await new Promise((resolve) => setTimeout(resolve, 2000));
 

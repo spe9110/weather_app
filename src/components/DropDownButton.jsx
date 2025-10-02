@@ -1,8 +1,8 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, memo } from "react";
 import arrowIcon from "../assets/images/icon-dropdown.svg";
-import { DropDownElement } from "./featuresMenu/DropDownElement";
+import DropDownElement from "./featuresMenu/DropDownElement";
 
-export const DropDownButton = ({ icon, value, tempUnit, setTempUnit, windUnit, setWindUnit, precipUnit, setPrecipUnit }) => {
+const DropDownButton = ({ icon, value, tempUnit, setTempUnit, windUnit, setWindUnit, precipUnit, setPrecipUnit }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -57,3 +57,5 @@ export const DropDownButton = ({ icon, value, tempUnit, setTempUnit, windUnit, s
     </div>
   );
 };
+
+export default memo(DropDownButton);

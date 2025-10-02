@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, memo } from "react";
 import { getEnglishWeekday } from "../../Utils/dateHelper.js";
 
 const HourlyBtn = ({ value, icon, days = [], onselect }) => {
@@ -46,4 +46,4 @@ const HourlyBtn = ({ value, icon, days = [], onselect }) => {
   );
 };
 
-export default HourlyBtn;
+export default memo(HourlyBtn);

@@ -1,12 +1,12 @@
-import React from 'react'
+import React, { memo } from 'react'
 import logo from '../assets/images/logo.svg'
-import { DropDownButton } from './DropDownButton'
+import DropDownButton from './DropDownButton'
 import { MdOutlineSettings } from "react-icons/md";
 
 const Header = ({ tempUnit, setTempUnit, windUnit, setWindUnit, precipUnit, setPrecipUnit }) => {
   return (
     <div className='header_top'>
-        <img src={logo} alt="logo" className='header_logo'/>
+        <img src={logo} alt="logo" width={80} height={80} loading='lazy' className='header_logo'/>
         <DropDownButton 
           icon={<MdOutlineSettings/>} 
           value={"Units"} 
@@ -21,4 +21,4 @@ const Header = ({ tempUnit, setTempUnit, windUnit, setWindUnit, precipUnit, setP
   )
 }
 
-export default Header
+export default memo(Header)

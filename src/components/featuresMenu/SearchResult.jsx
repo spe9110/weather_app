@@ -1,12 +1,14 @@
-import React from "react";
+import React, { memo } from "react";
 import SearchLoading from "./SearchLoading";
 
-export default function SearchResult({ results = [], onSelect, loading = false }) {
-  if (loading) {
+
+const SearchResult = ({ results = [], onSelect, loading = false }) => {
+  
+    if (loading) {
     return (
       <ul className="search_main_suggestion" role="listbox">
         <li className="w-full flex items-center justify-center py-3 px-4">
-          <SearchLoading small /> 
+          <SearchLoading /> 
         </li>
       </ul>
     );
@@ -37,3 +39,5 @@ export default function SearchResult({ results = [], onSelect, loading = false }
     </ul>
   );
 }
+
+export default memo(SearchResult);

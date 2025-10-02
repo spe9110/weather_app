@@ -1,4 +1,4 @@
-import React, {useState, useEffect, Suspense } from 'react'
+import {useState, useEffect, useMemo } from 'react'
 import Search from '../components/Search'
 import HourlyBtn from '../components/HourlyBtn'
 import { IoIosArrowDown } from "react-icons/io";
@@ -49,20 +49,31 @@ function WeatherApp() {
     
     return iconSun; // final fallback
   };
-  // const weatherCodeToIcon = (code) => {
-  //   if (code === 0) return Central_Icon;
-  //   if (code >= 1 && code <= 3) return iconSun;
-  //   return Central_Icon; // fallback
-  // };
 
    // Sort days Monday → Sunday
-  const weekdaysOrder = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+//   const weekdaysOrder = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
-  const sortedDays = Object.keys(meteoData?.hourlyByDay || {}).sort(
-    (a, b) =>
-      weekdaysOrder.indexOf(getEnglishWeekday(a)) -
-      weekdaysOrder.indexOf(getEnglishWeekday(b))
-  );
+//   const sortedDays = Object.keys(meteoData?.hourlyByDay || {}).sort(
+//     (a, b) =>
+//       weekdaysOrder.indexOf(getEnglishWeekday(a)) -
+//       weekdaysOrder.indexOf(getEnglishWeekday(b))
+//   );
+    const sortedDays = useMemo(() => {
+    const weekdaysOrder = [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+      "Sunday",
+    ];
+    return Object.keys(meteoData?.hourlyByDay || {}).sort(
+      (a, b) =>
+        weekdaysOrder.indexOf(getEnglishWeekday(a)) -
+        weekdaysOrder.indexOf(getEnglishWeekday(b))
+    );
+  }, [meteoData]);
 
   return (
     <div className=''>
@@ -96,6 +107,9 @@ function WeatherApp() {
                       className="display_weather_icon"
                       src={weatherCodeToIcon(meteoData?.current?.weathercode)}
                       alt="weather icon"
+                      width={80}
+                      height={80}
+                      loading="lazy"
                     />
                   <h3 className='display_current_temperature'>{meteoData?.current?.temperature || "--"}°</h3>
                 </div>

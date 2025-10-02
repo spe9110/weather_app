@@ -1,6 +1,7 @@
 import { FaCheck } from "react-icons/fa6";
+import { memo } from "react";
 
-export const DropDownElement = ({ title, valueOne, valueTwo, selectedUnit, setSelectedUnit }) => {
+const DropDownElement = ({ title, valueOne, valueTwo, selectedUnit, setSelectedUnit }) => {
   return (
     <div className="bg-neutral-700 border-b border-neutral-500 p-2 text-white text-[14px] md:text-[16px]">
       <h4 className="text-sm text-neutral-400">{title}</h4>
@@ -27,3 +28,5 @@ export const DropDownElement = ({ title, valueOne, valueTwo, selectedUnit, setSe
     </div>
   );
 };
+
+export default memo(DropDownElement);

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 
 const DailyForcast = ({ day, icon, temp, tempe}) => {
   return (
@@ -13,4 +13,4 @@ const DailyForcast = ({ day, icon, temp, tempe}) => {
   )
 }
 
-export default DailyForcast
+export default memo(DailyForcast);

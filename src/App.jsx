@@ -1,22 +1,29 @@
-import React from 'react'  
-import WeatherApp from "./pages/WeatherApp";
+import { Suspense, lazy } from "react"
 import { Route, Routes } from "react-router-dom";
-import Layout from './components/Layout';
 import ErrorBoundary from './components/ErrorBoundary';
+import SearchLoading from './components/featuresMenu/SearchLoading';
+const WeatherApp = lazy(() => import('./pages/WeatherApp'));
+const Layout = lazy(() => import("./components/Layout"));
+
+
 
 function App() {
 
   return (
     <div className='App'>
       <ErrorBoundary>
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<WeatherApp />} />
-          </Route>
-        </Routes>
+        <Suspense fallback={<div className="flex justify-center items-center h-screen"><SearchLoading /></div>}>
+          <Routes>
+            <Route path="/" element={<Layout />}>
+              <Route index element={<WeatherApp />} />
+            </Route>
+          </Routes>
+        </Suspense> 
       </ErrorBoundary>
     </div>
   )
 }
 
 export default App
+
+// npm install --save-dev gh-pages

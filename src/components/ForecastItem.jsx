@@ -1,5 +1,4 @@
-import React from 'react'
-
+import React, { memo } from "react";
 const ForecastItem = ({ icon, hour, temperature}) => {
   return (
     <div className='w-full h-[50px] bg-neutral-600 flex flex-row justify-between items-center gap-2 rounded-md px-[8px] mt-3 border border-neutral-500'>
@@ -12,4 +11,4 @@ const ForecastItem = ({ icon, hour, temperature}) => {
   )
 }
 
-export default ForecastItem
+export default memo(ForecastItem)

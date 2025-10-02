@@ -5,7 +5,7 @@ function SearchLoading({ small = false }) {
   return (
     <div
       className={`flex items-center justify-center ${
-        small ? "w-full py-0" : "w-full lg:w-[475px] p-3 px-6 mt-2 rounded-lg shadow-md"
+        small ? "w-full py-0" : "w-full lg:w-[475px] p-3 px-6 mt-2 rounded-lg"
       } bg-neutral-800`}
     >
       <CircleSpinner size={small ? 16 : 24} />
