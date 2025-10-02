@@ -45,15 +45,8 @@ Writing clean, reusable React components for scalability
 
 Strengthening my understanding of state management & props flow in React
 
-📸 Screenshots
-
-(Add screenshots of your mobile, tablet, and desktop versions here for presentation.)
 
 💡 Improvements for the Future
-
-Add a 5-day weather forecast feature
-
-Implement dark mode toggle
 
 Enhance error handling for invalid city searches
 
